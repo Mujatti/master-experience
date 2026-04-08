@@ -186,8 +186,7 @@ function AppWithConfig({ config, session }) {
               )}
 
               <div className="px-keyword-section">
-                <div className="px-keyword-toolbar">
-                  <div id={config.containerIds.filters} className="px-filters-container" />
+                <div className="px-keyword-toolbar px-keyword-toolbar-sort-only">
                   <div id={config.containerIds.sortBy} className="px-sortby-container" />
                 </div>
                 <div id={config.containerIds.results} className="px-results-container" />
@@ -251,11 +250,7 @@ function AppWithConfig({ config, session }) {
 
       {/* ── Footer ── */}
       <footer className="px-footer">
-        <p>
-          {labels.footerText}{' '}
-          <a href={labels.footerBrandUrl} target="_blank" rel="noopener noreferrer">{labels.footerBrand}</a>
-          {' '}{labels.footerTagline}
-        </p>
+        <p><a href={labels.footerBrandUrl} target="_blank" rel="noopener noreferrer">Powered by AddSearch</a></p>
       </footer>
     </main>
   );

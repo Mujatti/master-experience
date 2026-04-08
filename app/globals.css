@@ -413,3 +413,8 @@ a:hover { color: var(--accent-hover); }
   padding: 12px 24px 24px; width: 100%;
   background: linear-gradient(transparent, var(--bg) 20%);
 }
+
+
+.px-keyword-toolbar-sort-only { justify-content: flex-end; }
+.px-footer p { margin: 0; }
+.px-footer a { text-decoration: none; font-weight: 500; }
