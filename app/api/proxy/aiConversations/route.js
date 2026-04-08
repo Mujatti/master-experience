@@ -66,28 +66,21 @@ export async function POST(request) {
               if (done) break;
 
               buffer += decoder.decode(value, { stream: true });
-              const lines = buffer.split('
-');
+              const lines = buffer.split('\n');
               buffer = lines.pop() || '';
 
               for (const line of lines) {
                 const trimmed = line.trim();
                 if (trimmed.startsWith('data: ')) {
-                  controller.enqueue(encoder.encode(trimmed + '
-
-'));
+                  controller.enqueue(encoder.encode(trimmed + '\n\n'));
                 }
               }
             }
             if (buffer.trim().startsWith('data: ')) {
-              controller.enqueue(encoder.encode(buffer.trim() + '
-
-'));
+              controller.enqueue(encoder.encode(buffer.trim() + '\n\n'));
             }
           } catch (e) {
-            controller.enqueue(encoder.encode(`data: {"type":"error","message":"${e.message}"}
-
-`));
+            controller.enqueue(encoder.encode(`data: {"type":"error","message":"${e.message}"}\n\n`));
           } finally {
             controller.close();
           }
