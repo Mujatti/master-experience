@@ -418,3 +418,9 @@ a:hover { color: var(--accent-hover); }
 .px-keyword-toolbar-sort-only { justify-content: flex-end; }
 .px-footer p { margin: 0; }
 .px-footer a { text-decoration: none; font-weight: 500; }
+
+
+.px-streaming-text {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
