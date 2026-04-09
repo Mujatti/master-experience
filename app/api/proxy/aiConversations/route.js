@@ -31,7 +31,10 @@ export async function POST(request) {
 
     if (!apiResponse.ok) {
       const errText = await apiResponse.text();
-      return NextResponse.json({ error: `API returned ${apiResponse.status}`, details: errText }, { status: apiResponse.status });
+      return NextResponse.json(
+        { error: `API returned ${apiResponse.status}`, details: errText },
+        { status: apiResponse.status }
+      );
     }
 
     if (streamMode) {
@@ -41,38 +44,49 @@ export async function POST(request) {
           const reader = apiResponse.body.getReader();
           const decoder = new TextDecoder();
           let buffer = '';
+
           try {
             while (true) {
               const { done, value } = await reader.read();
               if (done) break;
+
               buffer += decoder.decode(value, { stream: true });
               const lines = buffer.split('
 ');
               buffer = lines.pop() || '';
+
               for (const line of lines) {
                 const trimmed = line.trim();
-                if (trimmed.startsWith('data: ')) controller.enqueue(encoder.encode(trimmed + '
+                if (trimmed.startsWith('data: ')) {
+                  controller.enqueue(encoder.encode(trimmed + '
 
 '));
+                }
               }
             }
-            if (buffer.trim().startsWith('data: ')) controller.enqueue(encoder.encode(buffer.trim() + '
+
+            if (buffer.trim().startsWith('data: ')) {
+              controller.enqueue(encoder.encode(buffer.trim() + '
 
 '));
+            }
           } catch (e) {
-            controller.enqueue(encoder.encode(`data: {"type":"error","message":"${e.message}"}
+            controller.enqueue(
+              encoder.encode(`data: {"type":"error","message":"${e.message}"}
 
-`));
+`)
+            );
           } finally {
             controller.close();
           }
         },
       });
+
       return new Response(stream, {
         headers: {
           'Content-Type': 'text/event-stream',
           'Cache-Control': 'no-cache',
-          Connection: 'keep-alive',
+          'Connection': 'keep-alive',
         },
       });
     }
@@ -82,7 +96,9 @@ export async function POST(request) {
     return NextResponse.json({
       answer: inner.answer || '',
       conversationId: inner.conversation_id || inner.conversationId || conversationId || '',
-      sources: Array.isArray(inner.sources) ? inner.sources.map(s => ({ title: s.title || s.url || '', url: s.url || s.link || '' })) : [],
+      sources: Array.isArray(inner.sources)
+        ? inner.sources.map((s) => ({ title: s.title || s.url || '', url: s.url || s.link || '' }))
+        : [],
     });
   } catch (err) {
     return NextResponse.json({ error: err.message }, { status: 500 });
