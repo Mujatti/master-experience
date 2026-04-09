@@ -339,33 +339,15 @@ export function resetAll() {
 }
 
 /**
- * Reset conversation only — blank slate in Dive Deeper.
+ * Reset the entire starter-app experience back to the landing state.
+ *
+ * UX rationale:
+ * If a user explicitly resets the Dive Deeper conversation, they should not
+ * be left with a resumable exploration shell or stale search/results state.
+ * The cleanest reset is to return to the main search bar and clear everything.
  */
 export function resetConversation() {
-  abortConversation();
-  if (_followUpAbort) { _followUpAbort(); _followUpAbort = null; }
-  _refinedQueryRef = '';
-  _aiAnswerComplete = '';
-  _aiSourcesComplete = [];
-  update({
-    messages: [],
-    relatedResults: [],
-    totalRelated: 0,
-    latestDiveQuery: '',
-    refinedQuery: '',
-    followUpLoading: false,
-    followUpStreaming: false,
-    streamingText: '',
-    aiAnswer: '',
-    aiSources: [],
-    aiLoading: false,
-    aiStreaming: false,
-    conversationId: null,
-    conversationStarted: false,
-    hasDiveSession: false,
-    returnedFromDive: false,
-    showAiAnswer: true,
-  });
+  resetAll();
 }
 
 /**
