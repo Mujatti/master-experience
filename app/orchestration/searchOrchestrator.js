@@ -119,6 +119,8 @@ export function doSearch(q) {
     aiLoading: true,
     aiStreaming: false,
     returnedFromDive: false,
+    hasDiveSession: false,
+    showAiAnswer: true,
     suggestions: [],
     showSuggestions: false,
     // Reset dive state
@@ -360,6 +362,9 @@ export function resetConversation() {
     aiStreaming: false,
     conversationId: null,
     conversationStarted: false,
+    hasDiveSession: false,
+    returnedFromDive: false,
+    showAiAnswer: true,
   });
 }
 

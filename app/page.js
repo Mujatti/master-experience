@@ -168,16 +168,17 @@ function AppWithConfig({ config, session }) {
 
               {state.showAiAnswer && (
                 <>
-                  {state.aiLoading && <LoadingDots message={labels.aiAnswerLoading} />}
-                  {(state.aiStreaming || (!state.aiLoading && state.aiAnswer)) && (
+                  
+                  {((state.aiLoading || state.aiStreaming || state.aiAnswer) ? true : false) && (
                     <AiAnswerCard
                       answer={state.aiAnswer}
                       sources={state.aiSources}
                       isStreaming={state.aiStreaming}
-                      label={labels.aiAnswerLabel}
-                      streamingLabel={labels.aiAnswerStreaming}
-                      sourcesLabel={labels.sourcesLabel}
+                      label={'AI Answers'}
+                      streamingLabel={'Thinking...'}
+                      sourcesLabel={'Sources'}
                       diveButtonText={labels.diveButtonText}
+                      isThinking={state.aiLoading && !state.aiStreaming && !state.aiAnswer}
                       showDiveCta={true}
                       onDiveDeeper={orchestrator.switchToDive}
                     />
@@ -214,7 +215,7 @@ function AppWithConfig({ config, session }) {
                   isStreaming={false}
                   label={labels.initialAnswerLabel}
                   query={state.query}
-                  sourcesLabel={labels.sourcesLabel}
+                  sourcesLabel={'Sources'}
                 />
               )}
 
@@ -223,7 +224,8 @@ function AppWithConfig({ config, session }) {
                 isLoading={state.followUpLoading}
                 isStreaming={state.followUpStreaming}
                 streamingText={state.streamingText}
-                streamingLabel={labels.aiAnswerStreaming}
+                streamingLabel={'Thinking...'}
+                sourcesLabel={'Sources'}
               />
 
               {!state.followUpLoading && !state.followUpStreaming && (

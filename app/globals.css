@@ -424,3 +424,12 @@ a:hover { color: var(--accent-hover); }
   white-space: pre-wrap;
   word-break: break-word;
 }
+
+
+.px-followup-icon { width: 46px; display:flex; align-items:center; justify-content:center; color: var(--text-muted); flex-shrink:0; }
+.px-followup-input { padding-left: 0; }
+.px-thinking { display:flex; align-items:center; gap:10px; color: var(--text-muted); padding: 10px 0; }
+.px-thinking-compact { padding: 4px 0 0; }
+.px-thinking-spinner { width: 18px; height: 18px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.18); border-top-color: var(--accent); animation: pxSpin 0.9s linear infinite; }
+@keyframes pxSpin { from { transform: rotate(0deg);} to { transform: rotate(360deg);} }
+.px-streaming-text p:first-child, .px-streaming-text h1:first-child, .px-streaming-text h2:first-child, .px-streaming-text h3:first-child { margin-top: 0; }
